@@ -12,10 +12,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<Car> getCars(List<Car> car, Integer count) {
-        if (count > 5) {
-            count = 5;
-        }
-        return car.stream().limit(count).collect(Collectors.toList());
+        return (count >= 5) ? car : car.subList(0, count);
     }
 }
 
