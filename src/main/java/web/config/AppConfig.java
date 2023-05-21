@@ -1,12 +1,10 @@
 package web.config;
 
 
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -20,8 +18,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 @Configuration
@@ -42,15 +38,6 @@ public class AppConfig {
         dataSource.setUsername(env.getProperty("db.username"));
         dataSource.setPassword(env.getProperty("db.password"));
 
-        //код из видео девкалибри
-//        dataSource.setInitialSize(Integer.valueOf(env.getProperty("db.initialSize")));
-//        dataSource.setMinIdle(Integer.valueOf(env.getProperty("db.minIdle")));
-//        dataSource.setMaxIdle(Integer.valueOf(env.getProperty("db.maxIdle")));
-//        dataSource.setTimeBetweenEvictionRunsMillis(Long.valueOf(env.getProperty("db.timeBetweenEvictionRunsMillis")));
-//        dataSource.setMinEvictableIdleTimeMillis(Long.valueOf(env.getProperty("db.minEvictableIdleTimeMillis")));
-//        dataSource.setTestOnBorrow(Boolean.valueOf(env.getProperty("db.testOnBorrow")));
-//        dataSource.setValidationQuery(env.getProperty("db.validationQuery"));
-
         return dataSource;
     }
 
@@ -59,7 +46,6 @@ public class AppConfig {
         LocalContainerEntityManagerFactoryBean entityManager = new LocalContainerEntityManagerFactoryBean();
         entityManager.setJpaVendorAdapter(getJpaVendorAdapter());
         entityManager.setDataSource(getDataSource());
-//        entityManager.setPersistenceUnitName("myJpaPersistenceUnit");
         entityManager.setPackagesToScan("web.models");
         entityManager.setJpaProperties(hibernateProperties());
 

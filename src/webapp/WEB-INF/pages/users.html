@@ -4,39 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <title>All users</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
 
+<div th:each="user: ${users}">
+    <a th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getName()}">user</a>
 
-<div>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Name</th>
-            <th scope="col">Edit</th>
-            <th scope="col">Delete</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="user: ${users}">
-            <td th:text="${user.id}"/>
-            <td th:text="${user.name}"/>
-            <td><a href="/show">Edit</a></td>
-            <td><a href="${pageContext.request.contextPath}/deleteUser/${user.id}">Delete</a></td>
-        </tr>
-    </table>
-    </tbody>
 </div>
 
 <br>
 <button onclick="window.location.href='users/new'">Create user</button>
-
-<br>
-<br>
-
 
 </body>
 </html>

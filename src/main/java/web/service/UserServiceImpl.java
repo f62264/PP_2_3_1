@@ -6,6 +6,7 @@ import web.models.User;
 
 import javax.transaction.Transactional;
 import java.util.List;
+
 @Transactional
 @Service
 public class UserServiceImpl implements UserService {
@@ -15,13 +16,15 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(JpaUserDao userDao) {
         this.userDao = userDao;
     }
+
     @Override
     public List getAllUsers() {
         return userDao.getAll();
     }
+
     @Override
     public User getUserById(Long id) {
-       return userDao.getUserById(id);
+        return userDao.getUserById(id);
     }
 
     @Override
@@ -30,18 +33,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUserById(Long id) {
-
+    public void updateUser(User user) {
+        userDao.updateUser(user);
     }
 
-    //    @Transactional
-//    @Override
-//    public void saveOrUpdate(User user) {
-//       if (0 == user.getId()) {
-//          userDao.addUser(user);
-//       } else {
-//           userDao.updateUser(user);
-//       }
-//    }
-
+    @Override
+    public User deleteUserById(Long id) {
+        User user = null;
+        try {
+            user = userDao.deleteUserById(id);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
 }

@@ -38,8 +38,11 @@ public class JpaUserDaoImpl implements JpaUserDao {
     }
 
     @Override
-    public User deleteUserById(Long id) {
+    public User deleteUserById(Long id) throws NullPointerException {
         User user = getUserById(id);
+        if (null == user) {
+            throw new NullPointerException("User not found");
+        }
         entityManager.remove(user);
         entityManager.flush();
         return user;
