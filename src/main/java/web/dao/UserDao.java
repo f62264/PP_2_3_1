@@ -1,10 +1,10 @@
 package web.dao;
 
-import web.models.User;
+import web.model.User;
 
 import java.util.List;
 
-public interface JpaUserDao {
+public interface UserDao {
     List<User> getAll();
 
     void addUser(User user);

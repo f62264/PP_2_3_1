@@ -1,17 +1,18 @@
 package web.service;
 
-import web.models.User;
+import web.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
-    public List getAllUsers();
+    List<User> getAllUsers();
 
-    public User getUserById(Long id);
+    User getUserById(Long id);
 
-    public void saveUser(User user);
+    void saveUser(User user);
 
-    public void updateUser(User user);
+    void updateUser(User user);
 
-    public User deleteUserById(Long id);
+    Optional<User> deleteUserById(Long id);
 }

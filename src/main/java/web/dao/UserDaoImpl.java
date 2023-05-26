@@ -1,16 +1,14 @@
 package web.dao;
 
 import org.springframework.stereotype.Repository;
-import web.models.User;
+import web.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-@Transactional
-public class JpaUserDaoImpl implements JpaUserDao {
+public class UserDaoImpl implements UserDao {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -28,13 +26,11 @@ public class JpaUserDaoImpl implements JpaUserDao {
     @Override
     public void addUser(User user) {
         entityManager.persist(user);
-        entityManager.flush();
     }
 
     @Override
     public void updateUser(User user) {
         entityManager.merge(user);
-        entityManager.flush();
     }
 
     @Override
@@ -44,7 +40,6 @@ public class JpaUserDaoImpl implements JpaUserDao {
             throw new NullPointerException("User not found");
         }
         entityManager.remove(user);
-        entityManager.flush();
         return user;
     }
 }

@@ -1,24 +1,25 @@
 package web.service;
 
 import org.springframework.stereotype.Service;
-import web.dao.JpaUserDao;
-import web.models.User;
+import web.dao.UserDao;
+import web.model.User;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
-@Transactional
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final JpaUserDao userDao;
+    private final UserDao userDao;
 
-    public UserServiceImpl(JpaUserDao userDao) {
+    public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
     }
 
     @Override
-    public List getAllUsers() {
+    public List<User> getAllUsers() {
         return userDao.getAll();
     }
 
@@ -27,24 +28,28 @@ public class UserServiceImpl implements UserService {
         return userDao.getUserById(id);
     }
 
+    @Transactional
     @Override
     public void saveUser(User user) {
         userDao.addUser(user);
     }
 
+    @Transactional
     @Override
     public void updateUser(User user) {
         userDao.updateUser(user);
     }
 
+    @Transactional
     @Override
-    public User deleteUserById(Long id) {
-        User user = null;
+    public Optional<User> deleteUserById(Long id) {
         try {
-            user = userDao.deleteUserById(id);
-        } catch (NullPointerException e) {
+            return Optional.ofNullable(userDao.deleteUserById(id));
+        } catch (EntityNotFoundException e) {
             e.printStackTrace();
+            return Optional.empty();
         }
-        return user;
     }
 }
+
+
